@@ -5,7 +5,7 @@ import { InMemoryCache } from "apollo-cache-inmemory"
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: "https://java-graphql-server.herokuapp.com/"
+  uri: "https://java-graphql-server.herokuapp.com/graphql"
   // uri: "http://localhost:8080/graphql"
 })
 
