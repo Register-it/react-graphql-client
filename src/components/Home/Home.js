@@ -29,7 +29,7 @@ function Home() {
   }
   const { restaurants } = data
   return (
-    <section style={{ width: 450 }}>
+    <section>
       {restaurants.map((restaurant) => (
         <Restaurant restaurant={restaurant} key={restaurant.id} />
       ))}

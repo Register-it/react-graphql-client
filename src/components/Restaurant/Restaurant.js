@@ -1,5 +1,5 @@
 import React from "react"
-import { withStyles } from "@material-ui/core/styles"
+import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles"
 import Dialog from "@material-ui/core/Dialog"
 import MuiDialogTitle from "@material-ui/core/DialogTitle"
 import MuiDialogContent from "@material-ui/core/DialogContent"
@@ -13,6 +13,8 @@ import Error from "../Error/Error"
 import Loading from "../loading/Loading"
 import StarRating from "./StarRating"
 import Reviews from "./Reviews"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import { CardMedia } from "@material-ui/core"
 
 const styles = (theme) => ({
   root: {
@@ -24,8 +26,19 @@ const styles = (theme) => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
+  },
+  reviews: {
+    display: "flex",
+    alignItems: "center"
+  },
+  image: {
+    maxWidth: "100%",
+    width: "800px",
+    height: "300px"
   }
 })
+
+const useStyles = makeStyles(styles)
 
 export const GET_RESTAURANT = gql`
   query getRestaurant($id: ID!) {
@@ -35,6 +48,7 @@ export const GET_RESTAURANT = gql`
       address
       city
       stars
+      numberOfReviews
       reviews {
         message
         stars
@@ -69,6 +83,7 @@ const DialogContent = withStyles((theme) => ({
 export default function Restaurant() {
   const [open, setOpen] = React.useState(true)
   const { id } = useParams()
+  const classes = useStyles()
   const { loading, data, error } = useQuery(GET_RESTAURANT, {
     variables: { id }
   })
@@ -76,6 +91,8 @@ export default function Restaurant() {
     setOpen(false)
   }
 
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   return (
     <Dialog
       disableBackdropClick
@@ -84,6 +101,7 @@ export default function Restaurant() {
       aria-labelledby="customized-dialog-title"
       maxWidth="lg"
       open={open}
+      fullScreen={isMobile}
     >
       {error && <Error />}
       {loading && <Loading />}
@@ -91,18 +109,28 @@ export default function Restaurant() {
         <>
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             <Typography variant="h3">{data.restaurant.name}</Typography>
-            <StarRating stars={data.restaurant.stars} />{" "}
-            {data.restaurant.numberOfRatings}
+            <div className={classes.reviews}>
+              <StarRating stars={data.restaurant.stars} /> (
+              {data.restaurant.numberOfReviews})
+            </div>
           </DialogTitle>
           <DialogContent dividers>
-            <img
+            <CardMedia
+              className={classes.image}
+              image={`https://source.unsplash.com/800x600/daily?${data.restaurant.name
+                .split(" ")
+                .join(",")}`}
+              title={data.restaurant.name}
+            />
+            {/* <img
+              className={classes.image}
               width="800"
               height="600"
               src={`https://source.unsplash.com/featured/800x600/?${data.restaurant.name
                 .split(" ")
                 .join(",")}`}
               alt={data.restaurant.name}
-            ></img>
+            ></img> */}
             <Reviews reviews={data.restaurant.reviews} restaurant={id} />
           </DialogContent>
         </>

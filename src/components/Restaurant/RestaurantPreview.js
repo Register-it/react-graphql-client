@@ -10,8 +10,14 @@ import { Button } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    margin: theme.spacing()
+    display: "inline-flex",
+    margin: theme.spacing(),
+    width: 450,
+    maxWidth: "100%",
+    padding: 45,
+    [theme.breakpoints.down(480)]: {
+      padding: 16
+    }
   },
   details: {
     display: "flex",
@@ -19,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flex: "1 0 auto",
-    minWidth: 300,
-    maxWidth: 300
+    maxWidth: "100vw"
   },
   cover: {
     width: 140,
@@ -56,7 +61,9 @@ export default function MediaControlCard({ restaurant }) {
                   <small>({numberOfReviews})</small>
                 </>
               ) : (
-                <Button size="small">Write the first review</Button>
+                <Button size="small" variant="outlined">
+                  review
+                </Button>
               )}
             </div>
             <Typography variant="subtitle1" color="textSecondary">
@@ -66,7 +73,7 @@ export default function MediaControlCard({ restaurant }) {
         </div>
         <CardMedia
           className={classes.cover}
-          image={`https://source.unsplash.com/featured/240x240/?${name
+          image={`https://source.unsplash.com/240x120/daily?${name
             .split(" ")
             .join(",")}`}
           title={name}
