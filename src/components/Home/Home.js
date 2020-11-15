@@ -1,11 +1,12 @@
 import React from "react"
-import Restaurant from "../Restaurant/RestaurantPreview"
 import { useQuery } from "@apollo/react-hooks"
 import gql from "graphql-tag"
 import Error from "../Error/Error"
+import Loading from "../loading/Loading"
+import Restaurant from "../Restaurant/RestaurantPreview"
 import { withHtmlPageMetadata } from "../HtmlPageMetadata"
 
-export const GET_RESTAURANTS = gql`
+const GET_RESTAURANTS = gql`
   query getRestaurant {
     restaurants {
       name
@@ -22,7 +23,7 @@ function Home() {
   const { loading, data, error } = useQuery(GET_RESTAURANTS, {})
 
   if (loading) {
-    return "loading"
+    return <Loading />
   }
   if (error) {
     return <Error />

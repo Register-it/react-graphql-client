@@ -8,11 +8,11 @@ import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import StarRating from "../StarRating"
 import { useNotifications } from "../../../Store"
-
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
 import Loading from "../../loading/Loading"
 import Error from "../../Error/Error"
+
+import gql from "graphql-tag"
+import { useMutation } from "@apollo/react-hooks"
 
 const ADD_REVIEW = gql`
   mutation createReview($message: String, $restaurantId: ID!, $stars: Int!) {
