@@ -2,18 +2,13 @@ import React from "react"
 import Snackbar from "@material-ui/core/Snackbar"
 import IconButton from "@material-ui/core/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
-import { useNotifications } from "../../Store"
 
-export default function Notification({ isOpen, notification }) {
-  const [open, setOpen] = React.useState(isOpen)
-  const { removeNotification } = useNotifications()
-
+export default function Notification({ isOpen, notification, onClose }) {
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return
     }
-    removeNotification(notification)
-    setOpen(false)
+    onClose(notification)
   }
 
   return (
@@ -22,7 +17,7 @@ export default function Notification({ isOpen, notification }) {
         vertical: "bottom",
         horizontal: "left"
       }}
-      open={open}
+      open={isOpen}
       autoHideDuration={4500}
       onClose={handleClose}
       message={notification.text}

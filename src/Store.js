@@ -1,7 +1,9 @@
 import { useGetAndSet } from "react-context-hook"
 
 export const STORE_VALUES = {
-  NOTIFICATIONS: "app.notifications"
+  NOTIFICATIONS: "app.notifications",
+  RESTAURANTS: "app.restaurants",
+  RESTAURANT: (id) => `app.restaurant.${id}`
 }
 
 export function useNotifications() {
@@ -11,7 +13,6 @@ export function useNotifications() {
   )
 
   function addNotification(text) {
-    console.log("add notifications", notifications)
     notifications.push({ text, id: notifications.length })
     setNotifications([...notifications])
   }

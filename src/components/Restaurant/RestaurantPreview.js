@@ -7,6 +7,10 @@ import Typography from "@material-ui/core/Typography"
 import StarRating from "./StarRating"
 import { Link } from "react-router-dom"
 import { Button } from "@material-ui/core"
+import {
+  getRestaurantImage,
+  getRestaurantImageCredit
+} from "./RestaurantImages"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function MediaControlCard({ restaurant }) {
+export default function RestaurantPreview({ restaurant }) {
   const { name, stars, address, city, numberOfReviews, id } = restaurant
   const classes = useStyles()
 
@@ -73,9 +77,7 @@ export default function MediaControlCard({ restaurant }) {
         </div>
         <CardMedia
           className={classes.cover}
-          image={`https://source.unsplash.com/240x120/daily?${name
-            .split(" ")
-            .join(",")}`}
+          image={getRestaurantImage(id)}
           title={name}
         />
       </Card>

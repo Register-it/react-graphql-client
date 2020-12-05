@@ -10,21 +10,7 @@ import StarRating from "../StarRating"
 import { useNotifications } from "../../../Store"
 import Loading from "../../loading/Loading"
 import Error from "../../Error/Error"
-
-import gql from "graphql-tag"
-import { useMutation } from "@apollo/react-hooks"
-
-const ADD_REVIEW = gql`
-  mutation createReview($message: String, $restaurantId: ID!, $stars: Int!) {
-    createReview(
-      input: { message: $message, stars: $stars, restaurantId: $restaurantId }
-    ) {
-      id
-      message
-      stars
-    }
-  }
-`
+import { useAddReview } from "../RestaurantApi"
 
 export default function CreateReviewButton({ restaurant }) {
   const [open, setOpen] = React.useState(false)
@@ -33,18 +19,19 @@ export default function CreateReviewButton({ restaurant }) {
   const [stars, setStars] = React.useState()
   const [message, setMessage] = React.useState("")
 
-  const [addReview, { loading, error }] = useMutation(ADD_REVIEW, {
-    onError: () => {},
-    onCompleted: (data) => {
-      setOpen(false)
-      addNotification("Your review has been added")
-    },
-    variables: {
-      restaurantId: restaurant,
-      message,
-      stars
-    }
-  })
+  function onComplete(data) {
+    setOpen(false)
+    setStars()
+    setMessage("")
+    addNotification("Your review has been added")
+  }
+
+  const [addReview, { loading, error }] = useAddReview(
+    restaurant,
+    message,
+    stars,
+    onComplete
+  )
 
   const handleClickOpen = (event) => {
     setOpen(true)
@@ -96,6 +83,7 @@ export default function CreateReviewButton({ restaurant }) {
             label="Your message"
             type="text"
             fullWidth
+            autoComplete="off"
             value={message}
             onChange={onMessageChangeHandler}
           />

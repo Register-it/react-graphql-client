@@ -31,4 +31,8 @@ function App() {
   )
 }
 
-export default withStore(App)
+export default withStore(
+  App,
+  {},
+  { logging: process.env.NODE_ENV === "development" }
+)
