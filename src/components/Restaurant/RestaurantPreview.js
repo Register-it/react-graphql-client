@@ -7,10 +7,7 @@ import Typography from "@material-ui/core/Typography"
 import StarRating from "./StarRating"
 import { Link } from "react-router-dom"
 import { Button } from "@material-ui/core"
-import {
-  getRestaurantImage,
-  getRestaurantImageCredit
-} from "./RestaurantImages"
+import { getRestaurantImage } from "./RestaurantImages"
 
 const useStyles = makeStyles((theme) => ({
   root: {
