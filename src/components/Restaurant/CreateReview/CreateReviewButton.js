@@ -32,6 +32,10 @@ export default function CreateReviewButton({ restaurant }) {
     stars,
     onComplete
   )
+  
+  function submitReview() {
+    addReview()
+  }
 
   const handleClickOpen = (event) => {
     setOpen(true)
@@ -41,9 +45,6 @@ export default function CreateReviewButton({ restaurant }) {
     setOpen(false)
   }
 
-  function submitReview() {
-    addReview()
-  }
 
   function onStarsChangeHandler(newValue) {
     setStars(newValue)

@@ -21,5 +21,5 @@ const useStyles = makeStyles((theme) => ({
 export default function Loading() {
   const classes = useStyles()
 
-  return <div className={classes.root}>Loading...</div>
+  return <div className={classes.root}><img src="/images/loading.gif" alt="Loading, please wait"></img></div>
 }
