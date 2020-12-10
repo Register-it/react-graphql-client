@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+function byId(a, b) {
+  return b.id - a.id
+}
+
 export default function Reviews({ reviews, restaurant }) {
   const classes = useStyles()
   return (
@@ -21,7 +25,7 @@ export default function Reviews({ reviews, restaurant }) {
       <h3>Reviews</h3>
       <CreateReviewButton restaurant={restaurant} />
       <List className={classes.root}>
-        {reviews.map((review) => (
+        {reviews.sort(byId).map((review) => (
           <Review key={review.id} review={review} />
         ))}
       </List>
